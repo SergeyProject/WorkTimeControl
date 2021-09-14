@@ -242,20 +242,6 @@ namespace WorkTimeControl.Client
         {
            return _image.Bitmap;
         }
-
-        bool IsEnableButtonStart(DateTime dt)
-        {
-            if (dt.Date.Day == DateTime.Now.Day)
-                return false;
-            else
-                return true;
-        }
-        bool IsEnableButtonStop(DateTime dt)
-        {
-            if (dt.Date.Day == DateTime.Now.Day)
-                return false;
-            else
-                return true;
-        }
+       
     }
 }
