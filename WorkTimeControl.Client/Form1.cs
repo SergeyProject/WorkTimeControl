@@ -173,7 +173,7 @@ namespace WorkTimeControl.Client
                 UserTimeRepository user = new UserTimeRepository();
                 user.StartTimeCreate(userTime);
                 button3.Enabled = false;
-               
+                button3.Text = "Приход на работу зафиксирован";
             }
         }
 
@@ -195,6 +195,7 @@ namespace WorkTimeControl.Client
                 UserTimeRepository user = new UserTimeRepository();
                 user.StopTimeCreate(userTime);
                 button4.Enabled = false;
+                button4.Text = "Уход с работы зафиксирован";
             }          
         }
 
