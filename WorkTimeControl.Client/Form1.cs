@@ -103,6 +103,12 @@ namespace WorkTimeControl.Client
                         label5.Text = $"{dates[1].Hour:00}:{dates[1].Minute:00}";
                 }
             }
+            ButtonsControl(dates);
+
+        }
+
+        void ButtonsControl(List<DateTime> dates)
+        {  
             if (dates.Count > 0)
             {
                 button3.Enabled = false;
@@ -112,17 +118,19 @@ namespace WorkTimeControl.Client
             {
                 button3.Enabled = true;
                 button3.Text = "Приход на работу";
+                button4.Enabled = false;
             }
-            if (dates.Count > 1)
+            if (button3.Enabled == false & dates.Count > 1)
             {
                 button4.Enabled = false;
                 button4.Text = "Уход с работы зафиксирован";
             }
-            else
+            if (button3.Enabled == false & dates.Count <2)
             {
                 button4.Enabled = true;
                 button4.Text = "Уход с работы";
             }
+
         }
 
         
@@ -173,7 +181,8 @@ namespace WorkTimeControl.Client
                 UserTimeRepository user = new UserTimeRepository();
                 user.StartTimeCreate(userTime);
                 button3.Enabled = false;
-               
+                button4.Enabled = true;
+                button3.Text = "Приход на работу зафиксирован";
             }
         }
 
@@ -195,6 +204,7 @@ namespace WorkTimeControl.Client
                 UserTimeRepository user = new UserTimeRepository();
                 user.StopTimeCreate(userTime);
                 button4.Enabled = false;
+                button4.Text = "Уход с работы зафиксирован";
             }          
         }
 
@@ -243,19 +253,6 @@ namespace WorkTimeControl.Client
            return _image.Bitmap;
         }
 
-        bool IsEnableButtonStart(DateTime dt)
-        {
-            if (dt.Date.Day == DateTime.Now.Day)
-                return false;
-            else
-                return true;
-        }
-        bool IsEnableButtonStop(DateTime dt)
-        {
-            if (dt.Date.Day == DateTime.Now.Day)
-                return false;
-            else
-                return true;
-        }
+       
     }
 }
