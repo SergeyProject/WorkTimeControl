@@ -89,11 +89,11 @@ namespace WorkTimeControl.Client
             UserTimeRepository userTimeRepository = new UserTimeRepository();
             foreach (UserTime item in userTimeRepository.GetUserTimes(ID))
             {
-                if (item.DateTime.Date == DateTime.Now.Date)
+                if (item.DateTimes.Date == DateTime.Now.Date)
                 {
                     //listBox2.Items.Add($"{item.Descript} {item.DateTime}");
-                    images.Add(ImageConvert.ByteToImage(item.Image));
-                    dates.Add(item.DateTime);
+                    images.Add(ImageConvert.ByteToImage(item.Photo));
+                    dates.Add(item.DateTimes);
                     pictureBox2.Image = images[0];
                     if (images.Count > 1)
                         pictureBox3.Image = images[1];
@@ -174,10 +174,10 @@ namespace WorkTimeControl.Client
 
                 UserTime userTime = new UserTime();
                 userTime.UserId = ID;
-                userTime.DateTime = DateTime.Now;
+                userTime.DateTimes = DateTime.Now;
                 label4.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
                 userTime.Descript = "Приход на работу";
-                userTime.Image = ImageConvert.ConvertToByte((Bitmap)image);
+                userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
                 UserTimeRepository user = new UserTimeRepository();
                 user.StartTimeCreate(userTime);
                 button3.Enabled = false;
@@ -197,10 +197,10 @@ namespace WorkTimeControl.Client
 
                 UserTime userTime = new UserTime();
                 userTime.UserId = ID;
-                userTime.DateTime = DateTime.Now;
+                userTime.DateTimes = DateTime.Now;
                 label5.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
                 userTime.Descript = "Уход с работы";
-                userTime.Image = ImageConvert.ConvertToByte((Bitmap)image);
+                userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
                 UserTimeRepository user = new UserTimeRepository();
                 user.StopTimeCreate(userTime);
                 button4.Enabled = false;
