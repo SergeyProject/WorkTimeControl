@@ -61,9 +61,9 @@ namespace WorkTimeControl.Reports
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(1, 167);
+            this.listView1.Location = new System.Drawing.Point(1, 179);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(756, 271);
+            this.listView1.Size = new System.Drawing.Size(756, 259);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -108,7 +108,7 @@ namespace WorkTimeControl.Reports
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(455, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(455, 48);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(143, 125);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -118,7 +118,7 @@ namespace WorkTimeControl.Reports
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(607, 36);
+            this.pictureBox2.Location = new System.Drawing.Point(607, 48);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(143, 125);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -137,7 +137,7 @@ namespace WorkTimeControl.Reports
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(474, 16);
+            this.label2.Location = new System.Drawing.Point(474, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 8;
@@ -146,7 +146,7 @@ namespace WorkTimeControl.Reports
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(636, 16);
+            this.label3.Location = new System.Drawing.Point(635, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 13);
             this.label3.TabIndex = 9;
