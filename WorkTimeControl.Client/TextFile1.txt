@@ -1,0 +1,35 @@
+﻿ //  -----------------------------------------------------------------------------------------------------------
+        //  --------------------------------- ПЕРЕПИСАТЬ ВЕСЬ МЕТОД ---------------------------------------------------
+        //  -----------------------------------------------------------------------------------------------------------
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ID = userId[listBox1.SelectedIndex];
+            //label1.Text = ID.ToString();
+            label3.Text = listBox1.Items[listBox1.SelectedIndex].ToString();
+
+            //Получить последние данные пользователя
+            //listBox2.Items.Clear();
+            List<Image> images = new List<Image>();
+            List<DateTime> dates = new List<DateTime>();
+            images.Clear();
+            dates.Clear();
+            ClearControl();
+            UserTimeRepository userTimeRepository = new UserTimeRepository();
+            foreach (UserTime item in userTimeRepository.GetUserTimes(ID))
+            {
+                if (item.Date.Date == DateTime.Now.Date)
+                {
+                    //listBox2.Items.Add($"{item.Descript} {item.DateTime}");
+                    images.Add(ImageConvert.ByteToImage(item.Photo));
+                    dates.Add(item.Date);
+                    pictureBox2.Image = images[0];
+                    if (images.Count > 1)
+                        pictureBox3.Image = images[1];
+
+                    label4.Text = $"{dates[0].Hour:00}:{dates[0].Minute:00}";
+                    if (dates.Count > 1)
+                        label5.Text = $"{dates[1].Hour:00}:{dates[1].Minute:00}";
+                }
+            }
+            ButtonsControl(dates);
+        }

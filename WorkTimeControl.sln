@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeControl.DATA", "Wor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeControl.Client", "WorkTimeControl.Client\WorkTimeControl.Client.csproj", "{49A2EF4F-526A-4480-937B-69C99A6FFEDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeControl.Reports", "WorkTimeControl.Reports\WorkTimeControl.Reports.csproj", "{3BB30843-3A9E-46B3-BB3C-559CDCAE4289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49A2EF4F-526A-4480-937B-69C99A6FFEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49A2EF4F-526A-4480-937B-69C99A6FFEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49A2EF4F-526A-4480-937B-69C99A6FFEDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB30843-3A9E-46B3-BB3C-559CDCAE4289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB30843-3A9E-46B3-BB3C-559CDCAE4289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB30843-3A9E-46B3-BB3C-559CDCAE4289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB30843-3A9E-46B3-BB3C-559CDCAE4289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

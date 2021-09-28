@@ -40,5 +40,13 @@ namespace WorkTimeControl.DATA.Repositories
                 return db.Users.ToList();
             }
         }
+
+        public User GetUserById(int id)
+        {
+            using (DataContext db = new DataContext())
+            {
+                return db.Users.Find(id);
+            }
+        }
     }
 }

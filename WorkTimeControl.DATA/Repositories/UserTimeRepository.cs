@@ -24,6 +24,14 @@ namespace WorkTimeControl.DATA.Repositories
             }
         }
 
+        public IEnumerable GetAllUserTime()
+        {
+            using (DataContext db = new DataContext())
+            {
+                return db.UserTimes.ToList();
+            }
+        }
+
         public IEnumerable GetUserTimes(int id)
         {
             using (DataContext db = new DataContext())

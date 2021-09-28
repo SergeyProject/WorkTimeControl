@@ -1,0 +1,42 @@
+﻿ private void LoadListView(UserTime _userTime)
+        {
+            //DateTime date = dateTimePicker1.Value;         
+            
+            if (_userTime.DateTimes.Date == dateTimePicker1.Value.Date)
+            {
+                UserTimeRepository db = new UserTimeRepository();
+                UserRepository userDb = new UserRepository();
+                UserTime userTm = new UserTime();
+                int userId = _userTime.UserId;
+                string[] value = new string[6];
+                foreach (UserTime userTime in db.GetAllUserTime())
+                {
+                    if (userId == userTime.UserId)
+                    {
+                        value[0] = userTime.DateTimes.ToShortDateString();
+                        value[1] = userDb.GetUserById(userId).Name;
+
+                        //userTm.DateTimes = userTime.DateTimes;
+
+                        if (userTime.Descript == "Приход на работу")
+                        {
+                            value[2] = userTime.DateTimes.ToShortTimeString();
+                            value[4] = userTime.Photo.Length.ToString();
+                        }
+                        if (userTime.Descript == "Уход с работы")
+                        {
+                            value[3] = userTime.DateTimes.ToShortTimeString();
+                            value[5] = userTime.Photo.Length.ToString();
+                        }
+                    }
+                }
+                viewItem = new ListViewItem(value[0]);
+                viewItem.SubItems.Add(value[1]);
+                viewItem.SubItems.Add(value[2]);
+                viewItem.SubItems.Add(value[3]);
+                viewItem.SubItems.Add(value[4]);
+                viewItem.SubItems.Add(value[5]);
+                listView1.Items.Add(viewItem);
+            }
+
+        }

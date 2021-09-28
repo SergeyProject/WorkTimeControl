@@ -8,6 +8,7 @@ namespace WorkTimeControl.DATA.Repositories.Abstract
         int StartTimeCreate(UserTime user);
         int StopTimeCreate(UserTime user);
         IEnumerable GetUserTimes(int id);
+        IEnumerable GetAllUserTime();
         bool Delete(int userId);
     }
 }
