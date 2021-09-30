@@ -17,6 +17,7 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using DirectShowLib;
 using WorkTimeControl.Client.Camera;
+using System.IO;
 
 namespace WorkTimeControl.Client
 {
@@ -24,8 +25,8 @@ namespace WorkTimeControl.Client
     {
         VideoCapture capture = null;
         DsDevice[] webCams = null;
-        //int selectedCameraId = 0;
-
+        int selectedCameraId = 0;
+        string fileOption = "optioncam.wtc";
 
         List<int> userId = new List<int>();
         int ID;
@@ -59,8 +60,27 @@ namespace WorkTimeControl.Client
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            FileOptionIsExist();
             LoadList();
             InitialDevice();
+        }
+
+        private void FileOptionIsExist()
+        {
+            FileInfo file = new FileInfo(fileOption);
+            if (!file.Exists)
+            {
+                SelCamFrm frmOption = new SelCamFrm();
+                frmOption.ShowDialog();
+                selectedCameraId = frmOption.cameraID;
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader(fileOption))
+                {
+                    selectedCameraId = int.Parse(sr.ReadLine());
+                }
+            }
         }
 
         void InitialDevice()
@@ -75,12 +95,9 @@ namespace WorkTimeControl.Client
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ID = userId[listBox1.SelectedIndex];
-            //label1.Text = ID.ToString();
+            ID = userId[listBox1.SelectedIndex];          
             label3.Text = listBox1.Items[listBox1.SelectedIndex].ToString();
-
-            //Получить последние данные пользователя
-            //listBox2.Items.Clear();
+          
             List<Image> images = new List<Image>();
             List<DateTime> dates = new List<DateTime>();
             images.Clear();
@@ -90,8 +107,7 @@ namespace WorkTimeControl.Client
             foreach (UserTime item in userTimeRepository.GetUserTimes(ID))
             {
                 if (item.DateTimes.Date == DateTime.Now.Date)
-                {
-                    //listBox2.Items.Add($"{item.Descript} {item.DateTime}");
+                {                   
                     images.Add(ImageConvert.ByteToImage(item.Photo));
                     dates.Add(item.DateTimes);
                     pictureBox2.Image = images[0];
@@ -222,7 +238,7 @@ namespace WorkTimeControl.Client
                 }
                 else
                 {
-                    capture = new VideoCapture(0);
+                    capture = new VideoCapture(selectedCameraId);
                     capture.ImageGrabbed += Capture_ImageGrabbed;
                     capture.Start();
                 }
@@ -253,6 +269,18 @@ namespace WorkTimeControl.Client
            return _image.Bitmap;
         }
 
-       
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelCamFrm frm = new SelCamFrm();
+            frm.ShowDialog();
+            loadCamsOption();
+        }
+
+
+        // чтение файла 
+        void loadCamsOption()
+        {
+
+        }
     }
 }

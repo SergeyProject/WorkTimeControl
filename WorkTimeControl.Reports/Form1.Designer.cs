@@ -90,14 +90,14 @@ namespace WorkTimeControl.Reports
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(37, 76);
+            this.dateTimePicker1.Location = new System.Drawing.Point(120, 119);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(156, 20);
             this.dateTimePicker1.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(199, 74);
+            this.button1.Location = new System.Drawing.Point(282, 117);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 23);
             this.button1.TabIndex = 4;
@@ -128,7 +128,7 @@ namespace WorkTimeControl.Reports
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 60);
+            this.label1.Location = new System.Drawing.Point(120, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 7;
