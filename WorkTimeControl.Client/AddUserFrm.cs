@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Autofac;
+using System;
 using System.Windows.Forms;
+using WorkTimeControl.BLL.Infrastructure;
+using WorkTimeControl.BLL.Infrastructure.Interfaces;
+using WorkTimeControl.BLL.Models;
 using WorkTimeControl.DATA.Models;
 using WorkTimeControl.DATA.Repositories;
+using WorkTimeControl.DATA.Repositories.Abstract;
 
 namespace WorkTimeControl.Client
 {
@@ -36,13 +34,25 @@ namespace WorkTimeControl.Client
             AddUser();
         }
 
+        //void AddUser()
+        //{
+        //    UserRepository repos = new UserRepository();
+        //    User user = new User();
+        //    user.Name = textBox1.Text;
+        //    int idx = repos.Create(user);
+        //    //MessageBox.Show(idx.ToString());
+        //    Close();
+        //}
+
         void AddUser()
         {
-            UserRepository repos = new UserRepository();
-            User user = new User();
+            var userBuilder = new ContainerBuilder();
+            userBuilder.RegisterType<UserService>().As<IUserService>();
+            userBuilder.RegisterType<UserRepository>().As<IUserRepository>();
+            var userDb = userBuilder.Build();
+            UserDTO user = new UserDTO();
             user.Name = textBox1.Text;
-            int idx = repos.Create(user);
-            //MessageBox.Show(idx.ToString());
+            int idx = userDb.Resolve<IUserService>().Create(user);
             Close();
         }
 

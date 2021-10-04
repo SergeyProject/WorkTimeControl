@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using WorkTimeControl.DATA.Models;
 using WorkTimeControl.DATA.Repositories.Abstract;
@@ -33,9 +34,9 @@ namespace WorkTimeControl.DATA.Repositories
             }
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable GetAllUsers()
         {
-            using(DataContext db=new DataContext())
+            using (DataContext db = new DataContext())
             {
                 return db.Users.ToList();
             }

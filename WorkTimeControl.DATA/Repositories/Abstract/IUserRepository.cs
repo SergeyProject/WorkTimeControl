@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using WorkTimeControl.DATA.Models;
 
 namespace WorkTimeControl.DATA.Repositories.Abstract
@@ -8,6 +9,6 @@ namespace WorkTimeControl.DATA.Repositories.Abstract
         int Create(User user);
         bool Delete(int Id);
         User GetUserById(int id);
-        IEnumerable<User> GetAllUsers();
+        IEnumerable GetAllUsers();
     }
 }

@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Autofac;
+using DirectShowLib;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
+using WorkTimeControl.BLL.Infrastructure;
+using WorkTimeControl.BLL.Infrastructure.Interfaces;
+using WorkTimeControl.BLL.Interfaces;
+using WorkTimeControl.BLL.Models;
+using WorkTimeControl.Client.Camera;
 using WorkTimeControl.DATA.Models;
 using WorkTimeControl.DATA.Repositories;
-
-using Emgu;
-using Emgu.CV;
-using Emgu.CV.Util;
-using Emgu.CV.Structure;
-using Emgu.Util;
-using DirectShowLib;
-using WorkTimeControl.Client.Camera;
-using System.IO;
+using WorkTimeControl.DATA.Repositories.Abstract;
 
 namespace WorkTimeControl.Client
 {
@@ -44,12 +41,31 @@ namespace WorkTimeControl.Client
             LoadList();
         }
 
+        //void LoadList()
+        //{
+        //    listBox1.Items.Clear();
+        //    userId.Clear();
+        //    UserRepository user = new UserRepository();
+        //    foreach(var item in user.GetAllUsers())
+        //    {
+        //        listBox1.Items.Add(item.Name);
+        //        userId.Add(item.Id);
+        //    }
+        //    if (listBox1.Items.Count > 0)
+        //        listBox1.SelectedIndex = 0;
+        //}
+
         void LoadList()
         {
             listBox1.Items.Clear();
             userId.Clear();
-            UserRepository user = new UserRepository();
-            foreach(var item in user.GetAllUsers())
+
+            var userBuilder = new ContainerBuilder();
+            userBuilder.RegisterType<UserService>().As<IUserService>();
+            userBuilder.RegisterType<UserRepository>().As<IUserRepository>();
+            var userDb = userBuilder.Build();
+
+            foreach (UserDTO item in userDb.Resolve<IUserService>().GetAllUsers())
             {
                 listBox1.Items.Add(item.Name);
                 userId.Add(item.Id);
@@ -57,7 +73,6 @@ namespace WorkTimeControl.Client
             if (listBox1.Items.Count > 0)
                 listBox1.SelectedIndex = 0;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             FileOptionIsExist();
@@ -156,14 +171,34 @@ namespace WorkTimeControl.Client
             DeleteUser();
         }
 
+        //void DeleteUser()
+        //{
+        //    if(MessageBox.Show("Запись будет удалена.\r\nПродолжить?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+        //    {
+        //        UserTimeRepository userTime = new UserTimeRepository();
+        //        userTime.Delete(ID);
+        //        UserRepository user = new UserRepository();
+        //        user.Delete(ID);
+        //        ClearControl();
+        //        LoadList();
+        //    }
+        //}
+
         void DeleteUser()
         {
-            if(MessageBox.Show("Запись будет удалена.\r\nПродолжить?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("Запись будет удалена.\r\nПродолжить?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
-                UserTimeRepository userTime = new UserTimeRepository();
-                userTime.Delete(ID);
-                UserRepository user = new UserRepository();
-                user.Delete(ID);
+                var userTimeBuilder = new ContainerBuilder();
+                userTimeBuilder.RegisterType<UserTimeService>().As<IUserTimeService>();
+                userTimeBuilder.RegisterType<UserTimeRepository>().As<IUserTimeRepository>();
+                var db = userTimeBuilder.Build();
+                db.Resolve<IUserTimeService>().Delete(ID);
+
+                var userBuilder = new ContainerBuilder();
+                userBuilder.RegisterType<UserService>().As<IUserService>();
+                userBuilder.RegisterType<UserRepository>().As<IUserRepository>();
+                var userDb = userBuilder.Build();
+                userDb.Resolve<IUserService>().Delete(ID);
                 ClearControl();
                 LoadList();
             }
@@ -179,30 +214,85 @@ namespace WorkTimeControl.Client
 
         private void button3_Click(object sender, EventArgs e)
         {
+            //if (label3.Text != "**")
+            //{
+
+            //    Mat m = new Mat();
+            //    capture.Retrieve(m);
+            //    var image= MakeScreenShot(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal));
+            //    pictureBox2.Image = image;
+
+
+            //    UserTime userTime = new UserTime();
+            //    userTime.UserId = ID;
+            //    userTime.DateTimes = DateTime.Now;
+            //    label4.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
+            //    userTime.Descript = "Приход на работу";
+            //    userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
+            //    UserTimeRepository user = new UserTimeRepository();
+            //    user.StartTimeCreate(userTime);
+            //    button3.Enabled = false;
+            //    button4.Enabled = true;
+            //    button3.Text = "Приход на работу зафиксирован";
+            //}
+            StartFix();
+        }
+
+        //  Фиксирование прихода на работу
+        void StartFix()        //  -----------------------------------------
+        {
             if (label3.Text != "**")
             {
 
                 Mat m = new Mat();
                 capture.Retrieve(m);
-                var image= MakeScreenShot(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal));
+                var image = MakeScreenShot(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal));
                 pictureBox2.Image = image;
-                
 
-                UserTime userTime = new UserTime();
+                UserTimeDTO userTime = new UserTimeDTO();
                 userTime.UserId = ID;
                 userTime.DateTimes = DateTime.Now;
                 label4.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
                 userTime.Descript = "Приход на работу";
                 userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
-                UserTimeRepository user = new UserTimeRepository();
-                user.StartTimeCreate(userTime);
+
+                var userTimeBuilder = new ContainerBuilder();
+                userTimeBuilder.RegisterType<UserTimeService>().As<IUserTimeService>();
+                userTimeBuilder.RegisterType<UserTimeRepository>().As<IUserTimeRepository>();
+                var db = userTimeBuilder.Build();
+                db.Resolve<IUserTimeService>().StartTimeCreate(userTime);
+              
                 button3.Enabled = false;
                 button4.Enabled = true;
                 button3.Text = "Приход на работу зафиксирован";
             }
-        }
+        }        
 
         private void button4_Click(object sender, EventArgs e)
+        {
+            //if (label3.Text != "**")
+            //{
+            //    Mat m = new Mat();
+            //    capture.Retrieve(m);
+            //    var image = MakeScreenShot(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal));
+            //    pictureBox3.Image = image;
+
+            //    UserTime userTime = new UserTime();
+            //    userTime.UserId = ID;
+            //    userTime.DateTimes = DateTime.Now;
+            //    label5.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
+            //    userTime.Descript = "Уход с работы";
+            //    userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
+            //    UserTimeRepository user = new UserTimeRepository();
+            //    user.StopTimeCreate(userTime);
+            //    button4.Enabled = false;
+            //    button4.Text = "Уход с работы зафиксирован";
+            //}          
+            StopFix();
+        }
+
+        //  Фиксирование ухода с работы
+        void StopFix()        
         {
             if (label3.Text != "**")
             {
@@ -211,21 +301,25 @@ namespace WorkTimeControl.Client
                 var image = MakeScreenShot(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal));
                 pictureBox3.Image = image;
 
-                UserTime userTime = new UserTime();
+                UserTimeDTO userTime = new UserTimeDTO();
                 userTime.UserId = ID;
                 userTime.DateTimes = DateTime.Now;
                 label5.Text = $"{DateTime.Now.Hour:00}:{DateTime.Now.Minute:00}";
                 userTime.Descript = "Уход с работы";
                 userTime.Photo = ImageConvert.ConvertToByte((Bitmap)image);
-                UserTimeRepository user = new UserTimeRepository();
-                user.StopTimeCreate(userTime);
+
+                var userTimeBuilder = new ContainerBuilder();
+                userTimeBuilder.RegisterType<UserTimeService>().As<IUserTimeService>();
+                userTimeBuilder.RegisterType<UserTimeRepository>().As<IUserTimeRepository>();
+                var db = userTimeBuilder.Build();
+                db.Resolve<IUserTimeService>().StartTimeCreate(userTime);
+
                 button4.Enabled = false;
                 button4.Text = "Уход с работы зафиксирован";
-            }          
+            }
         }
 
         // View camera
-
         void ViewCams()
         {
             try
@@ -272,15 +366,7 @@ namespace WorkTimeControl.Client
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SelCamFrm frm = new SelCamFrm();
-            frm.ShowDialog();
-            loadCamsOption();
-        }
-
-
-        // чтение файла 
-        void loadCamsOption()
-        {
-
-        }
+            frm.ShowDialog();           
+        }       
     }
 }
