@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using WorkTimeControl.BLL.Infrastructure.Interfaces;
 using WorkTimeControl.BLL.Mappers;
 using WorkTimeControl.BLL.Models;
+using WorkTimeControl.DATA.Models;
 using WorkTimeControl.DATA.Repositories.Abstract;
 
 namespace WorkTimeControl.BLL.Interfaces
@@ -20,7 +22,12 @@ namespace WorkTimeControl.BLL.Interfaces
 
         public IEnumerable GetAllUserTime()
         {
-            return _userTimeRepository.GetAllUserTime();
+            List<UserTimeDTO> listUserTimeDTO = new List<UserTimeDTO>();
+            foreach(UserTime userTime in _userTimeRepository.GetAllUserTime())
+            {
+                listUserTimeDTO.Add(userTime.ToUserTimeDTO());
+            }
+            return listUserTimeDTO;
         }
 
         public IEnumerable GetUserTimes(int id)

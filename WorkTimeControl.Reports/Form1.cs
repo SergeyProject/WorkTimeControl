@@ -160,7 +160,7 @@ namespace WorkTimeControl.Reports
             string[] value = new string[2];
             byte[] imgStart = null;
             byte[] imgStop = null;
-            foreach (UserTime  userTime in db.Resolve<IUserTimeService>().GetAllUserTime())
+            foreach (UserTimeDTO  userTime in db.Resolve<IUserTimeService>().GetAllUserTime())
             {
                 if (userTime.DateTimes.Date == dateTimePicker1.Value.Date)
                 {

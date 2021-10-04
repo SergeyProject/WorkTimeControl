@@ -26,5 +26,17 @@ namespace WorkTimeControl.BLL.Mappers
         {
             return new UserDTO { Id = user.Id, Name = user.Name };
         }
+
+        public static UserTimeDTO ToUserTimeDTO(this UserTime user)
+        {
+            return new UserTimeDTO
+            {
+                Id = user.Id,
+                DateTimes = user.DateTimes,
+                Descript = user.Descript,
+                Photo = user.Photo,
+                UserId = user.UserId
+            };
+        }
     }
 }
