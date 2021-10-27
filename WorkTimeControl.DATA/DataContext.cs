@@ -8,10 +8,6 @@ namespace WorkTimeControl.DATA
         public DataContext() : base("MyBase") { }
         public DbSet<User> Users { get; set; }
         public DbSet<UserTime> UserTimes { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite($"Filename={pathDb}");
-        //}
+        
     }
 }
