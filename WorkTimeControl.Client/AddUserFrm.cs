@@ -1,17 +1,14 @@
-﻿using Autofac;
-using System;
+﻿using System;
 using System.Windows.Forms;
 using WorkTimeControl.BLL.Infrastructure;
 using WorkTimeControl.BLL.Infrastructure.Interfaces;
 using WorkTimeControl.BLL.Models;
-using WorkTimeControl.DATA.Models;
-using WorkTimeControl.DATA.Repositories;
-using WorkTimeControl.DATA.Repositories.Abstract;
 
 namespace WorkTimeControl.Client
 {
     public partial class AddUserFrm : Form
     {
+        ServiceDTO serviceDTO = new ServiceDTO();
         public AddUserFrm()
         {
             InitializeComponent();
@@ -46,13 +43,13 @@ namespace WorkTimeControl.Client
 
         void AddUser()
         {
-            var userBuilder = new ContainerBuilder();
-            userBuilder.RegisterType<UserService>().As<IUserService>();
-            userBuilder.RegisterType<UserRepository>().As<IUserRepository>();
-            var userDb = userBuilder.Build();
+            //var userBuilder = new ContainerBuilder();
+            //userBuilder.RegisterType<UserService>().As<IUserService>();
+            //userBuilder.RegisterType<UserRepository>().As<IUserRepository>();
+            //var userDb = userBuilder.Build();
             UserDTO user = new UserDTO();
             user.Name = textBox1.Text;
-            int idx = userDb.Resolve<IUserService>().Create(user);
+            int idx = serviceDTO.UserService().Create(user);
             Close();
         }
 

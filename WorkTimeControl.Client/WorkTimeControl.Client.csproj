@@ -36,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=6.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.6.2.0\lib\netstandard2.0\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="DirectShowLib, Version=2.1.0.1599, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DirectShowLib.1.0.0\lib\DirectShowLib.dll</HintPath>
     </Reference>
@@ -152,10 +149,6 @@
     <ProjectReference Include="..\WorkTimeControl.BLL\WorkTimeControl.BLL.csproj">
       <Project>{B60AE093-7338-4976-B928-11095281AB45}</Project>
       <Name>WorkTimeControl.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WorkTimeControl.DATA\WorkTimeControl.DATA.csproj">
-      <Project>{98f54f35-7ebd-49c7-b918-4ec74edf26af}</Project>
-      <Name>WorkTimeControl.DATA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

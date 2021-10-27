@@ -32,7 +32,20 @@ namespace WorkTimeControl.BLL.Interfaces
 
         public IEnumerable GetUserTimes(int id)
         {
-            return _userTimeRepository.GetUserTimes(id);
+            List<UserTimeDTO> listTimeDTO = new List<UserTimeDTO>(); 
+            foreach(UserTime userTime in _userTimeRepository.GetUserTimes(id))
+            {
+                UserTimeDTO userTimeDTO = new UserTimeDTO()
+                {
+                    Id = userTime.Id,
+                    UserId = userTime.UserId,
+                    DateTimes = userTime.DateTimes,
+                    Descript = userTime.Descript,
+                    Photo = userTime.Photo
+                };
+                listTimeDTO.Add(userTimeDTO);
+            }
+            return listTimeDTO;
         }
 
         public int StartTimeCreate(UserTimeDTO user)
