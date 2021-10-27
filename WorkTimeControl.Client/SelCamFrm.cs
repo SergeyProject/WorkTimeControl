@@ -15,7 +15,6 @@ using Emgu.CV.Util;
 using Emgu.CV.Structure;
 using Emgu.Util;
 using DirectShowLib;
-using WorkTimeControl.Client.Camera;
 
 
 namespace WorkTimeControl.Client

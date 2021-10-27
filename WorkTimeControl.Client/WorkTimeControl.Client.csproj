@@ -97,8 +97,6 @@
     <Compile Include="AddUserFrm.Designer.cs">
       <DependentUpon>AddUserFrm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Camera\VCapture.cs" />
-    <Compile Include="Camera\ImageConvert.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using WorkTimeControl.BLL.Camera;
 using WorkTimeControl.BLL.Infrastructure;
 using WorkTimeControl.BLL.Models;
-using WorkTimeControl.Client.Camera;
 
 namespace WorkTimeControl.Client
 {
